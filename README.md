@@ -32,3 +32,6 @@ greeter.greet();
 1. Sign in to [travis](https://travis-ci.org/) and activate the build for your project.
 2. Sign in to [coveralls](https://coveralls.io/) and activate the build for your project.
 3. Replace {{github-user-name}}/{{github-app-name}} with your repo details like: "ospatil/generator-node-typescript".
+
+
+http://registry.npmjs.org/-/package/yarn/dist-tags
