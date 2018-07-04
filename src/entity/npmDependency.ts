@@ -1,11 +1,14 @@
-import {Dependency} from "./dependency";
+import {Dependency, DependencyType} from './dependency';
 
-class NpmDependency implements Dependency {
+export class NpmDependency implements Dependency {
     public readonly distTag: string;
     public readonly version: string;
+    public readonly type: DependencyType;
 
-    constructor(distTag: string, version: string) {
+
+    constructor(distTag: string, version: string, type: DependencyType) {
         this.distTag = distTag;
         this.version = version;
+        this.type = type;
     }
 }

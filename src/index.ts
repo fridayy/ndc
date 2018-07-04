@@ -1,3 +1,3 @@
-import { Cli } from './cli/cli';
+import {Cli} from './cli/cli';
 
 Cli.initialize();
