@@ -33,17 +33,21 @@
   "dependencies": {
     "commander": "^2.16.0",
     "immutable": "^3.8.2",
-    "request-promise": "^4.2.2"
+    "request-promise": "^4.2.2",
+    "rxjs": "^6.2.1",
+    "rxjs-compat": "^6.2.1"
   },
   "devDependencies": {
     "@types/jest": "^22.0.1",
     "@types/node": "^8.0.0",
     "@types/request-promise": "^4.1.41",
+    "@types/rx": "^4.1.1",
     "coveralls": "^2.0.0",
     "jest": "^22.0.4",
     "parcel": "^1.9.4",
     "prettier": "^1.5.2",
     "rimraf": "^2.0.0",
+    "rxjs-marbles": "^4.3.0",
     "ts-jest": "^22.0.1",
     "ts-node": "^3.2.0",
     "tslint": "^5.0.0",

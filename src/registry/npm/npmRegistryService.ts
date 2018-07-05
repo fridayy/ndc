@@ -1,27 +1,37 @@
 import {RegistryService} from "../registryService";
-import {Dependency, DependencyType} from "../../entity/dependency";
-import * as rp from 'request-promise';
+import {Dependency} from "../../entity/dependency";
 import {NpmDependency} from "../../entity/npmDependency";
-import {IO} from "../../util/io";
-import {Severity} from "../../util/severity";
-import {Objects} from "../../util/objects";
 import {Assert} from "../../util/assert";
+import {Observable} from "rxjs/Observable";
+import "rxjs-compat/add/observable/fromPromise";
+import "rxjs-compat/add/operator/map";
+import "rxjs-compat/add/operator/do";
+import {HttpProvider} from "../../io/http/HttpProvider";
+import {List} from "immutable";
+import "rxjs-compat/add/observable/from";
+import "rxjs-compat/add/operator/mergeMap";
 
 export class NpmRegistryService implements RegistryService {
 
-    async get(distTag: string): Promise<Dependency> {
-        const resp = await rp.get(this.url(distTag))
-            .catch(err => IO.println(`Unknown dist tag: ${distTag}`, Severity.ERROR));
+    private readonly httpProvider: HttpProvider<any, Observable<Dependency>>;
 
-        if (!Objects.isNullOrUndefined(resp)) {
-            const json = JSON.parse(resp);
-            return new NpmDependency(distTag, json.latest, DependencyType.RUNTIME);
-        }
-        throw Error(`Unknown dist tag: ${distTag}. Check your package.json`);
+    constructor(httpProvider: HttpProvider<any, Observable<Dependency>>) {
+        this.httpProvider = httpProvider;
     }
 
-    private url(distTag: string) {
+    public provide(distTag: string): Observable<Dependency> {
+        return this.httpProvider.get(NpmRegistryService.url(distTag))
+            .map(json => new NpmDependency(distTag, json.latest));
+    }
+
+    public provideAll(distTags: List<string>): Observable<Dependency> {
+        return Observable.from(distTags.toArray())
+            .flatMap(tag => this.provide(tag))
+    }
+
+    private static url(distTag: string) {
         Assert.notNullOrUndefined(distTag, 'distTag can not be null or undefined');
-        return `'http://registry.npmjs.org/-/package/${distTag}/dist-tags'`
+        return `http://registry.npmjs.org/-/package/${distTag}/dist-tags`
     }
+
 }

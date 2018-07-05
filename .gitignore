@@ -8,3 +8,4 @@ lib
 lib_test
 build
 dist
+.cache
