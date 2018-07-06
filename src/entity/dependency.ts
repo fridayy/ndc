@@ -5,5 +5,5 @@ export interface Dependency {
 
 export enum DependencyType {
     RUNTIME,
-    DEV
+    DEV,
 }

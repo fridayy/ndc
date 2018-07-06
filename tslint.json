@@ -1,6 +1,6 @@
 {
   "extends": [
-    "tslint:latest",
+    "tslint:recommended",
     "tslint-config-prettier"
   ],
   "rules": {
@@ -8,6 +8,8 @@
     "object-literal-sort-keys": false,
     "no-console": false,
     "jsx-no-lambda": false,
-    "interface-name": false
+    "interface-name": false,
+    "member-ordering": false,
+    "variable-name": false
   }
 }

@@ -19,37 +19,34 @@
   "typings": "lib/index.d.ts",
   "scripts": {
     "clean": "rimraf lib && rimraf coverage",
+    "format": "prettier --write \"{src,__tests__}/**/*.ts\" --single-quote --trailing-comma es5",
     "lint": "tslint --force --format verbose \"src/**/*.ts\"",
-    "prepublishOnly": "yarn run build",
-    "prebuild": "yarn run clean && yarn run lint && echo Using TypeScript && tsc --version",
+    "prepublishOnly": "npm run build",
+    "prebuild": "npm run clean && npm run format && npm run lint && echo Using TypeScript && tsc --version",
     "build": "tsc --pretty",
     "test": "jest",
     "coverage": "jest --coverage",
-    "watch": "yarn run build -- --watch",
+    "watch": "npm run build -- --watch",
     "watch:test": "jest --watch",
     "parcel": "parcel build build/index.js"
   },
   "dependencies": {
-    "commander": "2.16.0",
-    "immutable": "3.8.2",
-    "request-promise": "4.2.2",
-    "rxjs": "6.2.1",
-    "rxjs-compat": "6.2.1"
+    "commander": "^2.0.0",
+    "immutable": "^3.8.2"
   },
   "devDependencies": {
-    "@types/jest": "23.1.4",
-    "@types/node": "10.5.2",
-    "@types/request-promise": "4.1.41",
-    "@types/rx": "4.1.1",
-    "coveralls": "3.0.2",
-    "jest": "23.3.0",
-    "parcel": "1.9.4",
-    "rimraf": "2.6.2",
-    "ts-jest": "23.0.0",
-    "ts-node": "7.0.0",
-    "tslint": "5.10.0",
-    "tslint-config-prettier": "^1.13.0",
-    "typescript": "2.9.2"
+    "@types/jest": "^22.0.1",
+    "@types/node": "^8.0.0",
+    "coveralls": "^2.0.0",
+    "jest": "^22.0.4",
+    "parcel": "^1.9.4",
+    "prettier": "^1.5.2",
+    "rimraf": "^2.0.0",
+    "ts-jest": "^22.0.1",
+    "ts-node": "^3.2.0",
+    "tslint": "^5.0.0",
+    "tslint-config-prettier": "^1.1.0",
+    "typescript": "^2.3.0"
   },
   "engines": {
     "node": ">=6.0.0"
