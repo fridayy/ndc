@@ -6,6 +6,7 @@ import 'rxjs-compat/add/operator/combineLatest';
 import {ComparisonResult} from '../comparison/comparisonResult';
 import {Observable} from "rxjs/Observable";
 import {AbstractComparisonResultHandler} from "./abstractComparisonResultHandler";
+import chalk from 'chalk';
 
 export class PrintHandler extends AbstractComparisonResultHandler {
 
@@ -16,7 +17,7 @@ export class PrintHandler extends AbstractComparisonResultHandler {
     doHandle(request: NdcRequest, comparisonResult: Observable<ComparisonResult>): void {
         comparisonResult.subscribe((next: ComparisonResult) => {
             IO.println(
-                `${next.distTag} not up to date: [ current: ${next.currentVersion} | latest: ${next.latestVersion}]`
+                `${chalk.bold(next.distTag)} not up to date: [ current: ${chalk.red(next.currentVersion)} | latest: ${chalk.red(next.latestVersion)}]`
             );
         });
     }

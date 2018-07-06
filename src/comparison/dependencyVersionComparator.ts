@@ -10,19 +10,20 @@ import 'rxjs-compat/add/operator/combineLatest';
 import 'rxjs-compat/add/operator/do';
 import {HttpProvider} from "../io/http/httpProvider";
 import {Assert} from "../util/assert";
+import {RegistryService} from "../registry/registryService";
 
 export class DependencyVersionComparator {
 
-    private readonly httpService: HttpProvider<any, Observable<any>>;
+    private readonly registryService: RegistryService;
 
-    constructor(httpService: HttpProvider<any, Observable<any>>) {
-        this.httpService = httpService;
+    constructor(registryService: RegistryService) {
+        this.registryService = registryService;
     }
 
     public compare(packageJsonDependencies: Observable<Dependency>): Observable<ComparisonResult> {
         return packageJsonDependencies
             .flatMap((dependency: Dependency) => {
-             return this.httpService.get(DependencyVersionComparator.url(dependency.distTag))
+             return this.registryService.latestVersion(dependency.distTag)
                 .flatMap(response => {
                         return Observable.of(new ComparisonResult(
                             dependency.distTag,

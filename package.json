@@ -30,6 +30,7 @@
     "parcel": "parcel build build/index.js"
   },
   "dependencies": {
+    "chalk": "^2.4.1",
     "commander": "2.16.0",
     "immutable": "3.8.2",
     "request-promise": "4.2.2",

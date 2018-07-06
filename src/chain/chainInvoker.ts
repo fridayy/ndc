@@ -8,15 +8,14 @@ import {FileExportHandler} from "./fileExportHandler";
 import {Observable} from "rxjs/Observable";
 import {ComparisonResult} from "../comparison/comparisonResult";
 import {IO} from "../util/io";
+import chalk from 'chalk';
 
 export class ChainInvoker {
 
     public static invoke(request: NdcRequest) {
-        const dependencyComparator = new DependencyVersionComparator(new NodeHttpProvider());
+        const dependencyComparator = new DependencyVersionComparator(new NpmRegistryService(new NodeHttpProvider()));
         const fileReader = new DependencyFileReader();
         const packageJsonDependencies = fileReader.read(request.packageJsonPath || './package.json');
-
-
         const comparisonResult = dependencyComparator.compare(packageJsonDependencies);
         this.abortIfEmpty(comparisonResult);
 
@@ -28,7 +27,7 @@ export class ChainInvoker {
     private static abortIfEmpty(comparisonResult: Observable<ComparisonResult>) {
         comparisonResult.isEmpty().subscribe(isEmpty => {
             if (isEmpty) {
-                IO.println("Everything is up to date.");
+                IO.println(`${chalk.greenBright('Everything is up to date.')}`);
                 process.exit(0);
             }
         })
