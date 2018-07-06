@@ -10,11 +10,12 @@ export class Cli {
         const requestBuilder = NdcRequest.builder();
         const c = new Command();
         c.version('0.1.0')
-            .option('-p', 'Path to package json')
-            .action((path => { requestBuilder.withPackageJsonPath(path) }))
-            .option('-e', 'enables export')
+            .option('-p, --path <value>', 'Path to package json')
+            .option('-e, --export', 'enables export')
             .parse(process.argv);
 
+        requestBuilder.withPackageJsonPath(c.path);
+        requestBuilder.withExport(c.export);
         ChainInvoker.invoke(requestBuilder.build())
     }
 }

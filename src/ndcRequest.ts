@@ -43,8 +43,8 @@ export class NdcRequestBuilder {
         return this;
     }
 
-    public enableExport() {
-        this.export = true;
+    public withExport(bool: boolean) {
+        this.export = bool;
         return this;
     }
 

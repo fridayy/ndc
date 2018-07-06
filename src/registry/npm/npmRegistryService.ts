@@ -23,7 +23,7 @@ export class NpmRegistryService implements RegistryService {
     }
 
     public latestVersion(distTag: string): Observable<NpmRegistryResponse> {
-        return this.httpProvider.get(this.url(distTag))
+        return this.httpProvider.get(this.url(distTag)).do(next=> console.log("http call"))
     }
 
     private url(distTag: string) {
