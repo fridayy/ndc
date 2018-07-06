@@ -13,7 +13,6 @@ export class Cli {
             .option('-p', 'Path to package json')
             .action((path => { requestBuilder.withPackageJsonPath(path) }))
             .option('-e', 'enables export')
-            .action(() => console.log("LOL"))
             .parse(process.argv);
 
         ChainInvoker.invoke(requestBuilder.build())

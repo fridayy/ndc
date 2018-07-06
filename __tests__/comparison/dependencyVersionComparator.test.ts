@@ -3,10 +3,11 @@ import 'rxjs-compat/add/observable/of';
 import {NpmDependency} from '../../src/entity/npmDependency';
 import {DependencyVersionComparator} from '../../src/comparison/dependencyVersionComparator';
 import 'rxjs-compat/add/operator/delay';
+import {HttpProvider} from "../../src/io/http/httpProvider";
 
 describe('dependencyVersionEvaluator test', () => {
     test('returns expected structure', done => {
-        const classUnderTest = new DependencyVersionComparator();
+        const classUnderTest = new DependencyVersionComparator(new MockedHttpProvider());
 
         const ob1 = Observable.of(
             new NpmDependency('typescript', '1.2.3'),
@@ -14,13 +15,7 @@ describe('dependencyVersionEvaluator test', () => {
             new NpmDependency('abc', '1.0.0')
         );
 
-        const ob2 = Observable.of(
-            new NpmDependency('typescript', '2.9.0'),
-            new NpmDependency('node', '8.0.0'),
-            new NpmDependency('abc', '2.0.0')
-        );
-
-        classUnderTest.compare(ob1, ob2.delay(500)).subscribe(
+        classUnderTest.compare(ob1).subscribe(
             next => {
                 console.log(next);
                 expect(next.distTag).toBeTruthy();
@@ -28,7 +23,28 @@ describe('dependencyVersionEvaluator test', () => {
             },
             err => {
             },
-            () => done()
-        );
+            () => done());
     });
 });
+
+class MockedHttpProvider implements HttpProvider<any, any> {
+    delete(url: string): any {
+        return undefined;
+    }
+
+    get(url: string): any {
+        return Observable.of({latest: '1.2.3'});
+    }
+
+    patch(url: string, payload: any): any {
+        return undefined;
+    }
+
+    post(url: string, payload: any): any {
+        return undefined;
+    }
+
+    put(url: string, payload: any): any {
+        return undefined;
+    }
+}

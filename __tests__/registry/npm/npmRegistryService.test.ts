@@ -9,40 +9,10 @@ import {NpmDependency} from '../../../src/entity/npmDependency';
 describe('requests', () => {
     test('provides expected result', done => {
         const classUnderTest = new NpmRegistryService(new MockedHttpProvider());
-        classUnderTest.provide('abc').subscribe(next => {
-            expect(next.version).toBe('1.2.3');
-            expect(next.distTag).toBe('abc');
+        classUnderTest.latestVersion('abc').subscribe(next => {
+            expect(next.latest).toBe('1.2.3');
             done();
         });
-    });
-
-    test('provideAll', done => {
-        const classUnderTest = new NpmRegistryService(new MockedHttpProvider());
-
-        const tags = List(['a', 'b', 'c']);
-
-        classUnderTest.provideAll(tags).subscribe(
-            next => {
-                expect(Lists.contains(tags.toArray(), next.distTag)).toBeTruthy();
-            },
-            err => {
-            },
-            () => done()
-        );
-    });
-
-    test('provideObs', done => {
-        const classUnderTest = new NpmRegistryService(new MockedHttpProvider());
-
-        const obs = Observable.of(
-            new NpmDependency('abc', '1.0.0'),
-            new NpmDependency('xyz', '3.2.1')
-        );
-
-        classUnderTest
-            .provideObs(obs)
-            .subscribe(next => expect(next.version).toBe('1.2.3'));
-        done();
     });
 });
 

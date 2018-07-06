@@ -22,21 +22,14 @@ export class NpmRegistryService implements RegistryService {
         this.httpProvider = httpProvider;
     }
 
-    public provide(dependencies: Observable<Dependency>): Observable<Dependency> {
-        return dependencies.concatMap(dependency => {
-            return this.provideSingle(dependency.distTag);
-        });
+    public latestVersion(distTag: string): Observable<NpmRegistryResponse> {
+        return this.httpProvider.get(this.url(distTag))
     }
 
-    private provideSingle(distTag: string): Observable<Dependency> {
-        return this.httpProvider
-            .get(NpmRegistryService.url(distTag))
-            .map(json => new NpmDependency(distTag, json.latest))
-            .startWith(Scheduler.async);
-    }
-
-    private static url(distTag: string) {
+    private url(distTag: string) {
         Assert.notNullOrUndefined(distTag, 'distTag can not be null or undefined');
         return `http://registry.npmjs.org/-/package/${distTag}/dist-tags`;
     }
+
+
 }

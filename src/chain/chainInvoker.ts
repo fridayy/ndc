@@ -12,14 +12,12 @@ import {IO} from "../util/io";
 export class ChainInvoker {
 
     public static invoke(request: NdcRequest) {
-        const dependencyComparator = new DependencyVersionComparator();
+        const dependencyComparator = new DependencyVersionComparator(new NodeHttpProvider());
         const fileReader = new DependencyFileReader();
-        const registryService = new NpmRegistryService(new NodeHttpProvider());
         const packageJsonDependencies = fileReader.read(request.packageJsonPath || './package.json');
-        const remote = registryService.provide(packageJsonDependencies);
 
-        const comparisonResult = dependencyComparator.compare(packageJsonDependencies, remote);
 
+        const comparisonResult = dependencyComparator.compare(packageJsonDependencies);
         this.abortIfEmpty(comparisonResult);
 
         const chain = new PrintHandler(new FileExportHandler(undefined));
