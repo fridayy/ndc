@@ -1,22 +1,21 @@
 {
   "name": "ndc",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "ndc",
   "license": "MIT",
   "repository": "",
   "author": {
-    "name": "",
-    "email": "",
-    "url": ""
+    "name": "Benjamin Krenn",
+    "email": "benjamin.krenn@leftshift.one",
+    "url": "www.leftshift.one"
   },
   "keywords": [
-    ""
+    "npm dependency check"
   ],
   "files": [
     "build"
   ],
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "main": "dist/index.js",
   "scripts": {
     "clean": "rimraf lib && rimraf coverage",
     "lint": "tslint --force --format verbose \"src/**/*.ts\"",
@@ -27,12 +26,13 @@
     "coverage": "jest --coverage",
     "watch": "yarn run build -- --watch",
     "watch:test": "jest --watch",
-    "parcel": "parcel build build/index.js"
+    "parcel": "parcel build src/index.ts --global window"
   },
   "dependencies": {
     "chalk": "^2.4.1",
     "commander": "2.16.0",
     "immutable": "3.8.2",
+    "request": "^2.87.0",
     "request-promise": "4.2.2",
     "rxjs": "6.2.1",
     "rxjs-compat": "6.2.1"

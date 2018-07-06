@@ -11,6 +11,10 @@ import {IO} from "../util/io";
 import chalk from 'chalk';
 import "rxjs-compat/add/operator/publish";
 
+/**
+ * @author benjamin.krenn@leftshift.one - 7/7/18.
+ * @since 0.1.0
+ */
 export class ChainInvoker {
 
     public static invoke(request: NdcRequest) {
@@ -22,7 +26,7 @@ export class ChainInvoker {
 
         const chain = new PrintHandler(new FileExportHandler(undefined));
 
-        chain.handle(request, comparisonResult)
+        chain.handle(request, comparisonResult);
         comparisonResult.connect()
     }
 

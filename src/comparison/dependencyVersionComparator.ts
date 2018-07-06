@@ -8,10 +8,13 @@ import 'rxjs-compat/add/operator/mergeMap';
 import 'rxjs-compat/add/operator/withLatestFrom';
 import 'rxjs-compat/add/operator/combineLatest';
 import 'rxjs-compat/add/operator/do';
-import {HttpProvider} from "../io/http/httpProvider";
 import {Assert} from "../util/assert";
 import {RegistryService} from "../registry/registryService";
 
+/**
+ * @author benjamin.krenn@leftshift.one - 7/7/18.
+ * @since 0.1.0
+ */
 export class DependencyVersionComparator {
 
     private readonly registryService: RegistryService;

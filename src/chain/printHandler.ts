@@ -8,6 +8,12 @@ import {Observable} from "rxjs/Observable";
 import {AbstractComparisonResultHandler} from "./abstractComparisonResultHandler";
 import chalk from 'chalk';
 
+/**
+ * Prints the comparison results to stdout
+ *
+ * @author benjamin.krenn@leftshift.one - 7/7/18.
+ * @since 0.1.0
+ */
 export class PrintHandler extends AbstractComparisonResultHandler {
 
     constructor(next?: AbstractComparisonResultHandler) {
@@ -17,7 +23,8 @@ export class PrintHandler extends AbstractComparisonResultHandler {
     doHandle(request: NdcRequest, comparisonResult: Observable<ComparisonResult>): void {
         comparisonResult.subscribe((next: ComparisonResult) => {
             IO.println(
-                `${chalk.bold(next.distTag)} not up to date: [ current: ${chalk.red(next.currentVersion)} | latest: ${chalk.red(next.latestVersion)}]`
+                `${chalk.bold(next.distTag)} not up to date:
+                 [ current: ${chalk.red(next.currentVersion)} | latest: ${chalk.red(next.latestVersion)}]`
             );
         });
     }

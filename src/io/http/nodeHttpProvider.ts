@@ -6,6 +6,10 @@ import 'rxjs-compat/add/observable/fromPromise';
 import 'rxjs-compat/add/observable/empty';
 import {Scheduler} from "rxjs/internal/Rx";
 
+/**
+ * @author benjamin.krenn@leftshift.one - 7/7/18.
+ * @since 0.1.0
+ */
 export class NodeHttpProvider<I, O> implements HttpProvider<I, Observable<O>> {
     public delete(url: string): Observable<O> {
         return Observable.empty();

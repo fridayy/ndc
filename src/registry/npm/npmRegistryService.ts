@@ -1,6 +1,4 @@
 import {RegistryService} from '../registryService';
-import {Dependency} from '../../entity/dependency';
-import {NpmDependency} from '../../entity/npmDependency';
 import {Assert} from '../../util/assert';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs-compat/add/observable/fromPromise';
@@ -11,9 +9,12 @@ import 'rxjs-compat/add/observable/from';
 import 'rxjs-compat/add/operator/mergeMap';
 import {NpmRegistryResponse} from './npmRegistryResponse';
 import 'rxjs-compat/add/operator/concatMap';
-import {Scheduler} from "rxjs-compat";
 import "rxjs-compat/add/operator/startWith";
 
+/**
+ * @author benjamin.krenn@leftshift.one - 7/7/18.
+ * @since 0.1.0
+ */
 export class NpmRegistryService implements RegistryService {
     private readonly httpProvider: HttpProvider<any,
         Observable<NpmRegistryResponse>>;
@@ -23,7 +24,7 @@ export class NpmRegistryService implements RegistryService {
     }
 
     public latestVersion(distTag: string): Observable<NpmRegistryResponse> {
-        return this.httpProvider.get(this.url(distTag)).do(next=> console.log("http call"))
+        return this.httpProvider.get(this.url(distTag))
     }
 
     private url(distTag: string) {

@@ -12,6 +12,10 @@ import 'rxjs-compat/add/observable/from';
 import 'rxjs-compat/add/operator/zip';
 import {NpmDependency} from '../../entity/npmDependency';
 
+/**
+ * @author benjamin.krenn@leftshift.one - 7/7/18.
+ * @since 0.1.0
+ */
 export class DependencyFileReader
     implements FileReader<Observable<Dependency>> {
     read(path: string): Observable<Dependency> {

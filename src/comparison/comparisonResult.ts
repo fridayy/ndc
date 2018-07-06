@@ -1,3 +1,7 @@
+/**
+ * @author benjamin.krenn@leftshift.one - 7/7/18.
+ * @since 0.1.0
+ */
 export class ComparisonResult {
 
     private readonly _distTag: string;
@@ -9,7 +13,6 @@ export class ComparisonResult {
         this._currentVersion = currentVersion;
         this._latestVersion = latestVersion;
     }
-
 
     get distTag(): string {
         return this._distTag;

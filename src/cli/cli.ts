@@ -2,6 +2,10 @@ import {Command} from 'commander';
 import {ChainInvoker} from "../chain/chainInvoker";
 import {NdcRequest} from "../ndcRequest";
 
+/**
+ * @author benjamin.krenn@leftshift.one - 7/7/18.
+ * @since 0.1.0
+ */
 export class Cli {
     /**
      * Initializes the cli
