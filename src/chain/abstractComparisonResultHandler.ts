@@ -2,6 +2,7 @@ import {ComparisonResultHandler} from "./comparisonResultHandler";
 import {ComparisonResult} from "../comparison/comparisonResult";
 import {Observable} from "rxjs/Observable";
 import {NdcRequest} from "../ndcRequest";
+import {DependencyResultTuple} from "./entity/dependencyResultTuple";
 
 /**
  * @author benjamin.krenn@leftshift.one - 7/7/18.
@@ -11,21 +12,22 @@ export abstract class AbstractComparisonResultHandler implements ComparisonResul
 
     private next?: AbstractComparisonResultHandler;
 
-
     constructor(next?: AbstractComparisonResultHandler) {
         this.next = next;
     }
 
-    public handle(request: NdcRequest, comparisonResult: Observable<ComparisonResult>): void {
+    public handle(request: NdcRequest, dependencyResultTuple: DependencyResultTuple): void {
         if (this.isResponsible(request)) {
-            this.doHandle(request, comparisonResult);
+            this.doHandle(request, dependencyResultTuple);
         }
         if (this.next) {
-            this.next.handle(request, comparisonResult)
+            this.next.handle(request, dependencyResultTuple)
         }
     }
 
     abstract isResponsible(request: NdcRequest): boolean;
 
-    abstract doHandle(request: NdcRequest, comparisonResult: Observable<ComparisonResult>): void;
+    abstract doHandle(request: NdcRequest, dependencyResultTuple: DependencyResultTuple): void;
+
+
 }

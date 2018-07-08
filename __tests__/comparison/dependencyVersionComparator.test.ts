@@ -7,7 +7,7 @@ import {HttpProvider} from "../../src/io/http/httpProvider";
 import {RegistryService} from "../../src/registry/registryService";
 import {NpmRegistryResponse} from "../../src/registry/npm/npmRegistryResponse";
 
-describe('dependencyVersionEvaluator test', () => {
+describe('dependencyVersionComparator test', () => {
     test('returns expected structure', done => {
         const classUnderTest = new DependencyVersionComparator(new MockedRegistryService());
 
@@ -20,7 +20,6 @@ describe('dependencyVersionEvaluator test', () => {
         classUnderTest.compare(ob1).subscribe(
             next => {
                 expect(next.distTag).toBeTruthy();
-                expect(next.currentVersion).not.toBe(next.latestVersion);
                 expect(next.latestVersion).toBe("1.2.3")
             },
             err => {

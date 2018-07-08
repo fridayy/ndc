@@ -21,7 +21,7 @@
     "lint": "tslint --force --format verbose \"src/**/*.ts\"",
     "prepublishOnly": "yarn run build",
     "prebuild": "yarn run clean && yarn run lint && echo Using TypeScript && tsc --version",
-    "build": "tsc --pretty",
+    "build": "yarn test && tsc --pretty",
     "test": "jest",
     "coverage": "jest --coverage",
     "watch": "yarn run build -- --watch",

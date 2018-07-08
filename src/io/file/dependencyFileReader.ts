@@ -11,6 +11,9 @@ import 'rxjs-compat/add/observable/of';
 import 'rxjs-compat/add/observable/from';
 import 'rxjs-compat/add/operator/zip';
 import {NpmDependency} from '../../entity/npmDependency';
+import "rxjs-compat/add/operator/do";
+import {IO} from "../../util/io";
+import {Severity} from "../../util/severity";
 
 /**
  * @author benjamin.krenn@leftshift.one - 7/7/18.
@@ -33,6 +36,7 @@ export class DependencyFileReader
 
                 return jsonKeys.zip(jsonValues);
             })
-            .map(item => new NpmDependency(item[0], item[1] as string));
+            .map(item => new NpmDependency(item[0], item[1] as string))
+            .do(() => {}, err => IO.println("Could not read package.json file.", Severity.ERROR));
     }
 }
