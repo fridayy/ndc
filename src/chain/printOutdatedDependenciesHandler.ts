@@ -8,6 +8,9 @@ import chalk from 'chalk';
 import {DependencyResultTuple} from "./entity/dependencyResultTuple";
 import {versionMismatchFilter} from "./filter/versionMismatchFilter";
 import "rxjs-compat/add/operator/let";
+import {Observable} from "rxjs/Observable";
+import {PackageJson} from "../entity/packageJson";
+import {Tuple} from "../util/tuple";
 
 /**
  * Prints the comparison results to stdout
@@ -21,8 +24,8 @@ export class PrintOutdatedDependenciesHandler extends AbstractComparisonResultHa
         super(next);
     }
 
-    doHandle(request: NdcRequest, dependencyResultTuple: DependencyResultTuple): void {
-        dependencyResultTuple.comparisonResult
+    doHandle(request: NdcRequest, tuple: Tuple<Observable<ComparisonResult>, Observable<PackageJson>>): void {
+        tuple.left
             .let(versionMismatchFilter)
             .subscribe((next: ComparisonResult) => {
             IO.println(

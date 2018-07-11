@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "ndc",
   "license": "MIT",
-  "repository": "",
+  "repository": "https://github.com/fridayy/ndc",
   "author": {
     "name": "Benjamin Krenn",
     "email": "benjamin.krenn@leftshift.one",
@@ -13,9 +13,14 @@
     "npm dependency check"
   ],
   "files": [
-    "build"
+    "lib",
+    "bin"
   ],
-  "main": "dist/index.js",
+  "main": "./lib/index",
+  "preferGlobal": true,
+  "bin" : {
+    "ndc": "./bin/ndc"
+  },
   "scripts": {
     "clean": "rimraf lib && rimraf coverage",
     "lint": "tslint --force --format verbose \"src/**/*.ts\"",
@@ -26,25 +31,25 @@
     "coverage": "jest --coverage",
     "watch": "yarn run build -- --watch",
     "watch:test": "jest --watch",
-    "parcel": "parcel build src/index.ts --global window"
+    "parcel": "parcel build src/index.ts --no-minify"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "chalk": "^2.4.1",
     "commander": "2.16.0",
     "immutable": "3.8.2",
-    "request": "^2.87.0",
-    "request-promise": "4.2.2",
     "rxjs": "6.2.1",
-    "rxjs-compat": "6.2.1"
+    "rxjs-compat": "6.2.1",
+    "semver": "^5.5.0"
   },
   "devDependencies": {
     "@types/jest": "23.1.4",
     "@types/node": "10.5.2",
     "@types/request-promise": "4.1.41",
     "@types/rx": "4.1.1",
+    "@types/semver": "^5.5.0",
     "coveralls": "3.0.2",
     "jest": "23.3.0",
-    "parcel": "1.9.4",
     "rimraf": "2.6.2",
     "ts-jest": "23.0.0",
     "ts-node": "7.0.0",
@@ -53,7 +58,7 @@
     "typescript": "2.9.2"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.0.0"
   },
   "jest": {
     "transform": {
