@@ -15,11 +15,14 @@ export class Cli {
         const c = new Command();
         c.version('0.1.0')
             .option('-p, --path <value>', 'Path to package json')
-            .option('-e, --export', 'enables export')
+            .option('-e, --export <urls>', 'Sends a POST request to the given <urls>' +
+                ' e.g: http://abc.com,http://bla.com', (list) => list.split(','))
+            .option('-s, --stats', 'Prints stats')
             .parse(process.argv);
 
         requestBuilder.withPackageJsonPath(c.path);
         requestBuilder.withExport(c.export);
+        requestBuilder.withPrintedStats(c.stats);
         ChainInvoker.invoke(requestBuilder.build())
     }
 }

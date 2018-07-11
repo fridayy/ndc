@@ -8,7 +8,7 @@ export class NdcRequest {
 
     private _exitCode?: number;
 
-    private _export = false;
+    private _export: string[];
 
     private _printStats = true;
 
@@ -27,7 +27,7 @@ export class NdcRequest {
         return this._exitCode;
     }
 
-    get export(): boolean {
+    get export(): string[] {
         return this._export;
     }
 
@@ -43,7 +43,7 @@ export class NdcRequest {
 export class NdcRequestBuilder {
     packageJsonPath?: string;
     exitCode: number = 0;
-    export = false;
+    export: string[] = [];
     printStats = true;
 
     public withPackageJsonPath(path: string) {
@@ -56,8 +56,8 @@ export class NdcRequestBuilder {
         return this;
     }
 
-    public withExport(bool: boolean) {
-        this.export = bool;
+    public withExport(url: string[]) {
+        this.export = url;
         return this;
     }
 

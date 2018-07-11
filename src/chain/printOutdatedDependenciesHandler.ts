@@ -35,6 +35,4 @@ export class PrintOutdatedDependenciesHandler extends AbstractComparisonResultHa
     isResponsible(request: NdcRequest): boolean {
         return true;
     }
-
-
 }
