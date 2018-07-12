@@ -9,11 +9,11 @@ import {PackageMetadata} from "./packageMetadata";
 export class NdcResult {
     readonly results: ComparisonResult[];
     readonly statistics: DependencyStatistics;
-    readonly metadata?: PackageMetadata;
+    readonly metaInfo?: PackageMetadata;
 
     constructor(comparisonResults: ComparisonResult[], stats: DependencyStatistics, metadata?: PackageMetadata) {
         this.results = comparisonResults;
         this.statistics = stats;
-        this.metadata = metadata;
+        this.metaInfo = metadata;
     }
 }
