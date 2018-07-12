@@ -29,8 +29,7 @@ export class DispatchResultHandler extends AbstractComparisonResultHandler {
             .flatMap(result => {
                 return Observable.from(request.export).flatMap(url => {
                     return new AxiosHttpProvider().post(url, result)
-                        .do(() => IO.println("Sending result to: " + url), err => {
-                        }, () => IO.println("Done. bye bye."));
+                        .do(() => IO.println("Sending result to: " + url));
                 })
             }).subscribe()
     }

@@ -23,7 +23,10 @@ export class AxiosHttpProvider<I, O> implements HttpProvider<I, Observable<O>> {
         return Observable.fromPromise(Axios.get(url))
             .map(resp => resp.data)
             .timeout(5000)
-            .do(() => {}, error => {IO.println(`Could not GET ${url}`, Severity.ERROR)})
+            .catch(err => {
+                IO.println(`Could not GET from ${url}: ${err}`, Severity.ERROR);
+                return Observable.empty();
+            })
     }
 
     public patch(url: string, payload: I): Observable<O> {
@@ -35,7 +38,10 @@ export class AxiosHttpProvider<I, O> implements HttpProvider<I, Observable<O>> {
         return Observable.fromPromise(Axios.post(url, payload))
             .map(resp => resp.data)
             .timeout(5000)
-            .do(() => {}, error => {IO.println(`Could not POST to ${url}`, Severity.ERROR)})
+            .catch(err => {
+                IO.println(`Could not POST to ${url}`, Severity.ERROR);
+                return Observable.empty();
+            })
     }
 
     public put(url: string, payload: I): Observable<O> {

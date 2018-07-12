@@ -16,6 +16,7 @@ import * as util from "util";
 import {IO} from "../../util/io";
 import "rxjs-compat/add/operator/do";
 import chalk from "chalk";
+import "rxjs-compat/add/operator/catch";
 
 /**
  * @author benjamin.krenn@leftshift.one - 7/11/18.
@@ -34,7 +35,10 @@ export class PackageJsonFileReader implements FileReader<Observable<PackageJson>
                         return Observable.of(new PackageJson(json.name, json.version, tuple[0], tuple[1]))
                     })
             })
-            .do(() => {}, error => IO.println(`${chalk.red('Could not find package.json! Consider using -p')}`));
+            .catch(err => {
+                IO.println(`${chalk.red('Could not find package.json! Consider using -p <path-to-packagejson>')}`);
+                return Observable.empty();
+            });
     }
 
     private mapToArray(json: any): Observable<Dependency[]> {

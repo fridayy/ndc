@@ -30,8 +30,7 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "watch": "yarn run build -- --watch",
-    "watch:test": "jest --watch",
-    "parcel": "parcel build src/index.ts --no-minify"
+    "watch:test": "jest --watch"
   },
   "dependencies": {
     "axios": "^0.18.0",
