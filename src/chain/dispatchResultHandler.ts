@@ -38,8 +38,8 @@ export class DispatchResultHandler extends AbstractComparisonResultHandler {
         return !Objects.isNullOrUndefined(request.export);
     }
 
-    private outdatedDependencies(results: ComparisonResult[]): number {
-        return results.filter(arrayVersionMismatchFilter).length;
+    private outdatedDependencies(results: ComparisonResult[]): ComparisonResult[] {
+        return results.filter(arrayVersionMismatchFilter);
     }
 
     private resultObservable(tuple: Tuple<Observable<ComparisonResult>, Observable<PackageJson>>) {
@@ -50,7 +50,8 @@ export class DispatchResultHandler extends AbstractComparisonResultHandler {
             }, [])
             .zip(tuple.right)
             .flatMap(tuple => Observable.of(
-                new NdcResult(tuple[0], new DependencyStatistics(tuple[0].length, this.outdatedDependencies(tuple[0])),
+                new NdcResult(this.outdatedDependencies(tuple[0]),
+                    new DependencyStatistics(tuple[0].length, this.outdatedDependencies(tuple[0]).length),
                     new PackageMetadata(tuple[1].name || "", tuple[1].version || "")))
             )
     }
