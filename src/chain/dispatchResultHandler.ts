@@ -50,9 +50,8 @@ export class DispatchResultHandler extends AbstractComparisonResultHandler {
             }, [])
             .zip(tuple.right)
             .flatMap(tuple => Observable.of(
-                new NdcResult(tuple[0], new DependencyStatistics(tuple.length, this.outdatedDependencies(tuple[0])),
+                new NdcResult(tuple[0], new DependencyStatistics(tuple[0].length, this.outdatedDependencies(tuple[0])),
                     new PackageMetadata(tuple[1].name || "", tuple[1].version || "")))
             )
     }
-
 }
