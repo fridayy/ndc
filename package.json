@@ -1,6 +1,6 @@
 {
   "name": "ndc",
-  "version": "0.1.1",
+  "version": "0.1.4",
   "description": "ndc",
   "license": "MIT",
   "repository": "https://github.com/fridayy/ndc",
@@ -18,7 +18,7 @@
   ],
   "main": "./lib/index",
   "preferGlobal": true,
-  "bin" : {
+  "bin": {
     "ndc": "./bin/ndc"
   },
   "scripts": {
