@@ -29,8 +29,7 @@ export class PrintOutdatedDependenciesHandler extends AbstractComparisonResultHa
             .let(versionMismatchFilter)
             .subscribe((next: ComparisonResult) => {
             IO.println(
-                `${chalk.bold(next.distTag)} not up to date:
-                 [ current: ${chalk.red(next.currentVersion)} | latest: ${chalk.red(next.latestVersion)}]`
+                `${chalk.bold(next.distTag)} not up to date: [ current: ${chalk.red.bold(next.currentVersion)} | latest: ${chalk.red.bold(next.latestVersion)}]`
             );
         });
     }

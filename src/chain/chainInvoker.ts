@@ -1,5 +1,4 @@
 import {DependencyVersionComparator} from "../comparison/dependencyVersionComparator";
-import {DependencyFileReader} from "../io/file/dependencyFileReader";
 import {NpmRegistryService} from "../registry/npm/npmRegistryService";
 import {NdcRequest} from "../ndcRequest";
 import {AxiosHttpProvider} from "../io/http/axiosHttpProvider";
@@ -11,7 +10,6 @@ import {IO} from "../util/io";
 import chalk from 'chalk';
 import "rxjs-compat/add/operator/publish";
 import "rxjs-compat/add/operator/isEmpty";
-import {DependencyResultTuple} from "./entity/dependencyResultTuple";
 import {DispatchResultHandler} from "./dispatchResultHandler";
 import {PackageJsonFileReader} from "../io/file/packageJsonFileReader";
 import {PackageJson} from "../entity/packageJson";
@@ -36,7 +34,7 @@ export class ChainInvoker {
         const chain = new PrintOutdatedDependenciesHandler(new PrintStatisticsHandler(new DispatchResultHandler(undefined)));
 
         chain.handle(request, new Tuple<Observable<ComparisonResult>, Observable<PackageJson>>(comparisonResult, packageJson));
-        comparisonResult.connect()
+        comparisonResult.connect();
     }
 
     private static abortIfEmpty(comparisonResult: Observable<ComparisonResult>) {
@@ -48,7 +46,7 @@ export class ChainInvoker {
         })
     }
 
-    private static toDependencies(packageJsonObservable: Observable<PackageJson>) : Observable<Dependency> {
+    private static toDependencies(packageJsonObservable: Observable<PackageJson>): Observable<Dependency> {
         return packageJsonObservable
             .flatMap(pkgJson => {
                 return Observable.from(pkgJson.dependencies || []).merge(Observable.from(pkgJson.devDependencies || []))
