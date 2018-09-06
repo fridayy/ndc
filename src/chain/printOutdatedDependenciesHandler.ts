@@ -5,7 +5,6 @@ import 'rxjs-compat/add/operator/combineLatest';
 import {ComparisonResult} from '../comparison/comparisonResult';
 import {AbstractComparisonResultHandler} from "./abstractComparisonResultHandler";
 import chalk from 'chalk';
-import {DependencyResultTuple} from "./entity/dependencyResultTuple";
 import {versionMismatchFilter} from "./filter/versionMismatchFilter";
 import "rxjs-compat/add/operator/let";
 import {Observable} from "rxjs/Observable";
@@ -24,7 +23,7 @@ export class PrintOutdatedDependenciesHandler extends AbstractComparisonResultHa
         super(next);
     }
 
-    doHandle(request: NdcRequest, tuple: Tuple<Observable<ComparisonResult>, Observable<PackageJson>>): void {
+    public doHandle(request: NdcRequest, tuple: Tuple<Observable<ComparisonResult>, Observable<PackageJson>>): void {
         tuple.left
             .let(versionMismatchFilter)
             .subscribe((next: ComparisonResult) => {
@@ -34,7 +33,7 @@ export class PrintOutdatedDependenciesHandler extends AbstractComparisonResultHa
         });
     }
 
-    isResponsible(request: NdcRequest): boolean {
+    public isResponsible(request: NdcRequest): boolean {
         return true;
     }
 }

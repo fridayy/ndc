@@ -4,7 +4,6 @@ import {Observable} from "rxjs/Observable";
 import {ComparisonResult} from "../comparison/comparisonResult";
 import {IO} from "../util/io";
 import "rxjs-compat/add/operator/reduce";
-import {DependencyResultTuple} from "./entity/dependencyResultTuple";
 import {versionMismatchFilter} from "./filter/versionMismatchFilter";
 import "rxjs-compat/add/operator/let";
 import {PackageJson} from "../entity/packageJson";
@@ -19,7 +18,7 @@ import "rxjs-compat/add/operator/do";
  */
 export class PrintStatisticsHandler extends AbstractComparisonResultHandler {
 
-    doHandle(request: NdcRequest, tuple: Tuple<Observable<ComparisonResult>, Observable<PackageJson>>): void {
+    public doHandle(request: NdcRequest, tuple: Tuple<Observable<ComparisonResult>, Observable<PackageJson>>): void {
         tuple.left.reduce(((acc, value) => acc + 1), 0)
             .subscribe(val => IO.println(`Total Dependencies: ${val.toString()}`));
 
@@ -28,7 +27,7 @@ export class PrintStatisticsHandler extends AbstractComparisonResultHandler {
             .subscribe(val => IO.println(`Outdated Dependencies: ${val.toString()}`));
     }
 
-    isResponsible(request: NdcRequest): boolean {
+    public isResponsible(request: NdcRequest): boolean {
         return request.printStats;
     }
 }

@@ -2,7 +2,6 @@ import {ComparisonResultHandler} from "./comparisonResultHandler";
 import {ComparisonResult} from "../comparison/comparisonResult";
 import {Observable} from "rxjs/Observable";
 import {NdcRequest} from "../ndcRequest";
-import {DependencyResultTuple} from "./entity/dependencyResultTuple";
 import {PackageJson} from "../entity/packageJson";
 import {Tuple} from "../util/tuple";
 
@@ -27,9 +26,8 @@ export abstract class AbstractComparisonResultHandler implements ComparisonResul
         }
     }
 
-    abstract isResponsible(request: NdcRequest): boolean;
+    public abstract isResponsible(request: NdcRequest): boolean;
 
-    abstract doHandle(request: NdcRequest, tuple: Tuple<Observable<ComparisonResult>, Observable<PackageJson>>): void;
-
+    public abstract doHandle(request: NdcRequest, tuple: Tuple<Observable<ComparisonResult>, Observable<PackageJson>>): void;
 
 }

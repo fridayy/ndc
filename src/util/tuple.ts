@@ -3,11 +3,19 @@
  * @since 1.0.0
  */
 export class Tuple<L,R> {
-    readonly left: L;
-    readonly right: R;
+    private readonly _left: L;
+    private readonly _right: R;
 
     constructor(left: L, right: R) {
-        this.left = left;
-        this.right = right;
+        this._left = left;
+        this._right = right;
+    }
+
+    get left(): L {
+        return this._left;
+    }
+
+    get right(): R {
+        return this._right;
     }
 }

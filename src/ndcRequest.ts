@@ -4,13 +4,13 @@
  */
 export class NdcRequest {
 
-    private _packageJsonPath?: string;
+    private readonly _packageJsonPath?: string;
 
-    private _exitCode?: number;
+    private readonly _exitCode?: number;
 
-    private _export: string[];
+    private readonly _export: string[];
 
-    private _printStats = true;
+    private readonly _printStats: boolean;
 
     constructor(builder: NdcRequestBuilder) {
         this._packageJsonPath = builder.packageJsonPath;
@@ -35,16 +35,16 @@ export class NdcRequest {
         return this._printStats;
     }
 
-    static builder(): NdcRequestBuilder {
+    public static builder(): NdcRequestBuilder {
         return new NdcRequestBuilder();
     }
 }
 
 export class NdcRequestBuilder {
-    packageJsonPath?: string;
-    exitCode: number = 0;
-    export: string[] = [];
-    printStats = true;
+    public packageJsonPath?: string;
+    public exitCode: number = 0;
+    public export: string[] = [];
+    public printStats = true;
 
     public withPackageJsonPath(path: string) {
         this.packageJsonPath = path;

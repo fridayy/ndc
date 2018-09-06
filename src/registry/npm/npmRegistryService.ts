@@ -24,10 +24,10 @@ export class NpmRegistryService implements RegistryService {
     }
 
     public latestVersion(distTag: string): Observable<NpmRegistryResponse> {
-        return this.httpProvider.get(this.url(distTag))
+        return this.httpProvider.get(NpmRegistryService.url(distTag))
     }
 
-    private url(distTag: string) {
+    private static url(distTag: string) : string {
         Assert.notNullOrUndefined(distTag, 'distTag can not be null or undefined');
         return `http://registry.npmjs.org/-/package/${distTag}/dist-tags`;
     }

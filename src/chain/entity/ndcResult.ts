@@ -7,13 +7,26 @@ import {DependencyStatistics} from "./dependencyStatistics";
 import {PackageMetadata} from "./packageMetadata";
 
 export class NdcResult {
-    readonly results: ComparisonResult[];
-    readonly statistics: DependencyStatistics;
-    readonly metaInfo?: PackageMetadata;
+    private readonly _results: ComparisonResult[];
+    private readonly _statistics: DependencyStatistics;
+    private readonly _metaInfo?: PackageMetadata;
 
     constructor(comparisonResults: ComparisonResult[], stats: DependencyStatistics, metadata?: PackageMetadata) {
-        this.results = comparisonResults;
-        this.statistics = stats;
-        this.metaInfo = metadata;
+        this._results = comparisonResults;
+        this._statistics = stats;
+        this._metaInfo = metadata;
+    }
+
+
+    get results(): ComparisonResult[] {
+        return this._results;
+    }
+
+    get statistics(): DependencyStatistics {
+        return this._statistics;
+    }
+
+    get metaInfo(): PackageMetadata {
+        return this._metaInfo!;
     }
 }

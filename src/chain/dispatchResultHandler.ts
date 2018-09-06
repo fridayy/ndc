@@ -19,12 +19,13 @@ import {Objects} from "../util/objects";
 import {PackageMetadata} from "./entity/packageMetadata";
 
 /**
+ * Dispatches the dependency check result json to the given URLs
  * @author benjamin.krenn@leftshift.one - 7/8/18.
- * @since 1.0.0
+ * @since 0.1.0
  */
 export class DispatchResultHandler extends AbstractComparisonResultHandler {
 
-    doHandle(request: NdcRequest, tuple: Tuple<Observable<ComparisonResult>, Observable<PackageJson>>): void {
+    public doHandle(request: NdcRequest, tuple: Tuple<Observable<ComparisonResult>, Observable<PackageJson>>): void {
         this.resultObservable(tuple)
             .flatMap(result => {
                 return Observable.from(request.export).flatMap(url => {
@@ -34,7 +35,7 @@ export class DispatchResultHandler extends AbstractComparisonResultHandler {
             }).subscribe()
     }
 
-    isResponsible(request: NdcRequest): boolean {
+    public isResponsible(request: NdcRequest): boolean {
         return !Objects.isNullOrUndefined(request.export);
     }
 
@@ -49,10 +50,10 @@ export class DispatchResultHandler extends AbstractComparisonResultHandler {
                 return acc
             }, [])
             .zip(tuple.right)
-            .flatMap(tuple => Observable.of(
-                new NdcResult(this.outdatedDependencies(tuple[0]),
-                    new DependencyStatistics(tuple[0].length, this.outdatedDependencies(tuple[0]).length),
-                    new PackageMetadata(tuple[1].name || "", tuple[1].version || "")))
+            .flatMap(_ => Observable.of(
+                new NdcResult(this.outdatedDependencies(_[0]),
+                    new DependencyStatistics(_[0].length, this.outdatedDependencies(_[0]).length),
+                    new PackageMetadata(_[1].name || "", _[1].version || "")))
             )
     }
 }

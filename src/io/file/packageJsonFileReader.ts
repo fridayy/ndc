@@ -20,19 +20,20 @@ import "rxjs-compat/add/operator/catch";
 
 /**
  * @author benjamin.krenn@leftshift.one - 7/11/18.
- * @since 1.0.0
+ * @since 0.1.0
  */
 export class PackageJsonFileReader implements FileReader<Observable<PackageJson>> {
-    read(path: string): Observable<PackageJson> {
+
+    public read(path: string): Observable<PackageJson> {
         Assert.notNullOrUndefined(path, 'path can not be undefined or null');
         const promisifiedFileReader = util.promisify(fs.readFile);
 
         return Observable.fromPromise(promisifiedFileReader(path, 'UTF-8'))
             .map(str => JSON.parse(str))
-            .flatMap(json => {
-                return this.mapToArray(json.dependencies).zip(this.mapToArray(json.devDependencies))
+            .flatMap(parsedJson => {
+                return this.mapToArray(parsedJson.dependencies).zip(this.mapToArray(parsedJson.devDependencies))
                     .flatMap(tuple => {
-                        return Observable.of(new PackageJson(json.name, json.version, tuple[0], tuple[1]))
+                        return Observable.of(new PackageJson(parsedJson.name, parsedJson.version, tuple[0], tuple[1]))
                     })
             })
             .catch(err => {
@@ -43,9 +44,9 @@ export class PackageJsonFileReader implements FileReader<Observable<PackageJson>
 
     private mapToArray(json: any): Observable<Dependency[]> {
         return Observable.of(json)
-            .flatMap(json => {
-                const jsonKeys = Observable.from(Object.keys(json));
-                const jsonValues = Observable.from(Object.values(json));
+            .flatMap(_ => {
+                const jsonKeys = Observable.from(Object.keys(_));
+                const jsonValues = Observable.from(Object.values(_));
 
                 return jsonKeys.zip(jsonValues);
             }).map(item => new NpmDependency(item[0], item[1] as string))

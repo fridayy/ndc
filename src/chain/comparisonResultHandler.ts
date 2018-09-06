@@ -1,7 +1,6 @@
 import {NdcRequest} from '../ndcRequest';
 import {Observable} from "rxjs/Observable";
 import {ComparisonResult} from "../comparison/comparisonResult";
-import {DependencyResultTuple} from "./entity/dependencyResultTuple";
 import {PackageJson} from "../entity/packageJson";
 import {Tuple} from "../util/tuple";
 
