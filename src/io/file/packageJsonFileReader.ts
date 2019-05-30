@@ -12,7 +12,6 @@ import "rxjs-compat/add/operator/reduce";
 import "rxjs-compat/add/observable/of";
 import "rxjs-compat/add/operator/zip";
 import "rxjs-compat/add/observable/from";
-import * as util from "util";
 import {IO} from "../../util/io";
 import "rxjs-compat/add/operator/do";
 import chalk from "chalk";
@@ -26,10 +25,8 @@ export class PackageJsonFileReader implements FileReader<Observable<PackageJson>
 
     public read(path: string): Observable<PackageJson> {
         Assert.notNullOrUndefined(path, 'path can not be undefined or null');
-        const promisifiedFileReader = util.promisify(fs.readFile);
-
-        return Observable.fromPromise(promisifiedFileReader(path, 'UTF-8'))
-            .map(str => JSON.parse(str))
+        return Observable.fromPromise(fs.promises.readFile(path))
+            .map(str => JSON.parse(str.toString("UTF-8")))
             .flatMap(parsedJson => {
                 return this.mapToArray(parsedJson.dependencies).zip(this.mapToArray(parsedJson.devDependencies))
                     .flatMap(tuple => {
@@ -37,6 +34,7 @@ export class PackageJsonFileReader implements FileReader<Observable<PackageJson>
                     })
             })
             .catch(err => {
+                IO.println(err);
                 IO.println(`${chalk.red('Could not find package.json! Consider using -p <path-to-packagejson>')}`);
                 return Observable.empty();
             });
